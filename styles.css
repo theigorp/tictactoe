@@ -73,7 +73,8 @@ a {
     font-size: 80px;
 }
 /*create fake x and o*/
-.blocks.x::before, .blocks.x::after {
+.blocks.x::before, .blocks.x::after,
+.game.x .blocks:not(.x):not(.o):hover::before, .game.x .blocks:not(.x):not(.o):hover::after {
     content: '';
     width: 15px;
     height: 120px;
@@ -81,31 +82,49 @@ a {
     position: absolute;
 }
 
-.blocks.x::before {
+.blocks.x::before,
+.game.x .blocks:not(.x):not(.o):hover::before, .game.x .blocks:not(.x):not(.o):hover::after  {
     transform: rotate(45deg);
 }
 
-.blocks.x::after {
+.blocks.x::after,
+.game.x .blocks:not(.x):not(.o):hover::after  {
     transform: rotate(-45deg);
 }
 
-.blocks.o::before, .blocks.o::after {
+.game.x .blocks:not(.x):not(.o):hover::before, .game.x .blocks:not(.x):not(.o):hover::after {
+    background-color: lightgray;
+}
+
+.blocks.o::before, .blocks.o::after,
+.game.o .blocks:not(.x):not(.o):hover::before, .game.o .blocks:not(.x):not(.o):hover::after {
     content: '';
     border-radius: 50%;
     position: absolute;
 }
 
-.blocks.o::before {
+.blocks.o::before,
+.game.o .blocks:not(.x):not(.o):hover::before {
     width: 120px;
     height: 120px;
     background-color: black;
 }
 
-.blocks.o::after {
+.blocks.o::after,
+.game.o .blocks:not(.x):not(.o):hover::after {
     width: 95px;
     height: 95px;
     background-color: white;
 }
+
+.game.o .blocks:not(.x):not(.o):hover::before {
+    background-color: lightgrey;
+}
+
+.game.o .blocks:not(.x):not(.o):hover::after {
+    background-color: white;
+}
+
 
 .blocks.x, .blocks.o {
     cursor: not-allowed;
