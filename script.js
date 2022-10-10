@@ -4,7 +4,8 @@ const Gameboard = (() => {
     const buttonO  = document.querySelector('#player-o');
     const startButton = document.querySelector('#start');
     const startControlsEl = document.querySelector('.start-controls');
-    let playerChoice;
+    let playerChoice, playerTurn;
+    const statusEl = document.querySelector('.status');
 
     startControlsEl.addEventListener('click', (e) => {
         if(e.target.id == 'player-x')
@@ -19,9 +20,21 @@ const Gameboard = (() => {
         }
         else if(e.target.id == 'start')
         {
-            //funkcija koja ce da hoveruje x ili o oko cursora
+            playerTurn = playerChoice;
             startControlsEl.style.display = 'none';
+            statusEl.textContent = `Player ${playerChoice} is on the move`;
         }
     });
-    
+
+    const cellElements = document.querySelectorAll('[data-cell]');
+
+    function handleClick(e) {
+        const cell = e.target;
+        const currentPlayer = playerTurn;
+        placeMark(cell, currentPlayer);
+    }
+
+    cellElements.forEach(cell => {
+        cell.addEventListener('click', handleClick, {once: true});
+    });
 })();
