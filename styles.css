@@ -72,3 +72,41 @@ a {
     align-items: center;
     font-size: 80px;
 }
+/*create fake x and o*/
+.blocks.x::before, .blocks.x::after {
+    content: '';
+    width: 15px;
+    height: 120px;
+    background-color: black;
+    position: absolute;
+}
+
+.blocks.x::before {
+    transform: rotate(45deg);
+}
+
+.blocks.x::after {
+    transform: rotate(-45deg);
+}
+
+.blocks.o::before, .blocks.o::after {
+    content: '';
+    border-radius: 50%;
+    position: absolute;
+}
+
+.blocks.o::before {
+    width: 120px;
+    height: 120px;
+    background-color: black;
+}
+
+.blocks.o::after {
+    width: 95px;
+    height: 95px;
+    background-color: white;
+}
+
+.blocks.x, .blocks.o {
+    cursor: not-allowed;
+}

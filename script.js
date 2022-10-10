@@ -21,28 +21,59 @@ const Gameboard = (() => {
         else if(e.target.id == 'start')
         {
             playerTurn = playerChoice;
+            grid.classList.add(playerTurn);
             startControlsEl.style.display = 'none';
             statusEl.textContent = `Player ${playerChoice} is on the move`;
+            handleHover();
         }
     });
 
     const blocks = document.querySelectorAll('.blocks');
 
-    function handleClick(e) {
-        console.log(e.target.id);
-        if(playerTurn == 'X')
+    function handleHover() {
+        if(grid.classList.contains('X'))
         {
-            e.target.textContent = playerTurn;
-            playerTurn = 'O';
+            blocks.forEach(block => {
+                block.addEventListener('mouseover', (e) => {
+                    e.target.style.color = 'lightgrey';
+                    e.target.textContent = 'X';
+                });
+                block.addEventListener('mouseout', (e) => {
+                    e.target.style.color = '';
+                    e.target.textContent = '';
+                });
+            });
         }
-        else if(playerTurn == 'O')
+        else if(grid.classList.contains('O'))
         {
-            e.target.textContent = playerTurn;
-            playerTurn = 'X';
+            blocks.forEach(block => {
+                block.addEventListener('mouseover', (e) => {
+                    e.target.style.color = 'lightgrey';
+                    e.target.textContent = 'O';
+                });
+                block.addEventListener('mouseout', (e) => {
+                    e.target.style.color = '';
+                    e.target.textContent = '';
+                });
+            });
         }
     }
 
-    blocks.forEach(block => {
-        block.addEventListener('click', handleClick, {once: true});
-    });
+    (function handleClick() {
+        blocks.forEach(block => {
+            block.addEventListener('click', (e) => {
+                console.log(e.target.id);
+                if(playerTurn == 'X')
+                {
+                    e.target.textContent = playerTurn;
+                    playerTurn = 'O';
+                }
+                else if(playerTurn == 'O')
+                {
+                    e.target.textContent = playerTurn;
+                    playerTurn = 'X';
+                }
+            }, {once: true});
+        });
+    })();
 })();
