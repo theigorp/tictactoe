@@ -5,7 +5,6 @@ const Gameboard = (() => {
     const startButton = document.querySelector('#start');
     const startControlsEl = document.querySelector('.start-controls');
     let playerChoice, xTurn;
-    const statusEl = document.querySelector('.status');
 
     const combinations = [
         [0,1,2],
@@ -35,7 +34,6 @@ const Gameboard = (() => {
         {
             grid.classList.add(playerChoice);
             startControlsEl.style.display = 'none';
-            statusEl.textContent = `Player ${playerChoice} is on the move`;
         }
     });
 
@@ -45,6 +43,8 @@ const Gameboard = (() => {
         const block = e.target;
         const currentMarker = xTurn ? 'x' : 'o';
         placeMarker(block, currentMarker);
+        if(checkResult()==1) console.log('o is winner')
+        else if(checkResult()==2) console.log('x is winner');
         switchTurns();
         switchHover();
     }
@@ -63,6 +63,28 @@ const Gameboard = (() => {
 
         if(xTurn) grid.classList.add('x');
         else if(!xTurn) grid.classList.add('o');
+    }
+
+    function checkResult(currentMarker) {
+        let winner;
+        if(checkO()) return winner = 1;
+        if(checkX()) return winner = 2;
+    }
+
+    function checkX() {
+        return combinations.some(combination => {
+            return combination.every(index => {
+                return blocks[index].classList.contains('x');
+            });
+        });
+    }
+
+    function checkO() {
+        return combinations.some(combination => {
+            return combination.every(index => {
+                return blocks[index].classList.contains('o');
+            });
+        });
     }
 
     blocks.forEach(block => {

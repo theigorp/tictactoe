@@ -25,6 +25,13 @@ a {
     text-decoration: none;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -41,7 +48,7 @@ a {
     gap: 10px;
 }
 
-.start-controls button {
+.start-controls button, .message-container button {
     border: none;
     background-color: cornflowerblue;
     color: white;
@@ -128,4 +135,24 @@ a {
 
 .blocks.x, .blocks.o {
     cursor: not-allowed;
+}
+
+.message-container {
+    background-color: blue;
+    height: 50px;
+    width: 200px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    font-size: 25px;
+}
+
+.message-container button {
+    background-color: white;
+    color: black;
+    font-size: 16px;
 }
