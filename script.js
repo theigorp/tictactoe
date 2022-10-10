@@ -26,15 +26,23 @@ const Gameboard = (() => {
         }
     });
 
-    const cellElements = document.querySelectorAll('[data-cell]');
+    const blocks = document.querySelectorAll('.blocks');
 
     function handleClick(e) {
-        const cell = e.target;
-        const currentPlayer = playerTurn;
-        placeMark(cell, currentPlayer);
+        console.log(e.target.id);
+        if(playerTurn == 'X')
+        {
+            e.target.textContent = playerTurn;
+            playerTurn = 'O';
+        }
+        else if(playerTurn == 'O')
+        {
+            e.target.textContent = playerTurn;
+            playerTurn = 'X';
+        }
     }
 
-    cellElements.forEach(cell => {
-        cell.addEventListener('click', handleClick, {once: true});
+    blocks.forEach(block => {
+        block.addEventListener('click', handleClick, {once: true});
     });
 })();
