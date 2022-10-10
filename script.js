@@ -4,76 +4,68 @@ const Gameboard = (() => {
     const buttonO  = document.querySelector('#player-o');
     const startButton = document.querySelector('#start');
     const startControlsEl = document.querySelector('.start-controls');
-    let playerChoice, playerTurn;
+    let playerChoice, xTurn;
     const statusEl = document.querySelector('.status');
+
+    const combinations = [
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [6,4,2]
+    ]
 
     startControlsEl.addEventListener('click', (e) => {
         if(e.target.id == 'player-x')
         {
             console.log('Player choose X');
-            playerChoice = 'X';
+            playerChoice = 'x';
+            xTurn = true;
         }
         else if(e.target.id == 'player-o')
         {
             console.log('Player choose O');
-            playerChoice = 'O';
+            playerChoice = 'o';
+            xTurn = false;
         }
         else if(e.target.id == 'start')
         {
-            playerTurn = playerChoice;
-            grid.classList.add(playerTurn);
+            grid.classList.add(playerChoice);
             startControlsEl.style.display = 'none';
             statusEl.textContent = `Player ${playerChoice} is on the move`;
-            handleHover();
         }
     });
 
     const blocks = document.querySelectorAll('.blocks');
 
-    function handleHover() {
-        if(grid.classList.contains('X'))
-        {
-            blocks.forEach(block => {
-                block.addEventListener('mouseover', (e) => {
-                    e.target.style.color = 'lightgrey';
-                    e.target.textContent = 'X';
-                });
-                block.addEventListener('mouseout', (e) => {
-                    e.target.style.color = '';
-                    e.target.textContent = '';
-                });
-            });
-        }
-        else if(grid.classList.contains('O'))
-        {
-            blocks.forEach(block => {
-                block.addEventListener('mouseover', (e) => {
-                    e.target.style.color = 'lightgrey';
-                    e.target.textContent = 'O';
-                });
-                block.addEventListener('mouseout', (e) => {
-                    e.target.style.color = '';
-                    e.target.textContent = '';
-                });
-            });
-        }
+    function handleClick(e) {
+        const block = e.target;
+        const currentMarker = xTurn ? 'x' : 'o';
+        placeMarker(block, currentMarker);
+        switchTurns();
+        switchHover();
     }
 
-    (function handleClick() {
-        blocks.forEach(block => {
-            block.addEventListener('click', (e) => {
-                console.log(e.target.id);
-                if(playerTurn == 'X')
-                {
-                    e.target.textContent = playerTurn;
-                    playerTurn = 'O';
-                }
-                else if(playerTurn == 'O')
-                {
-                    e.target.textContent = playerTurn;
-                    playerTurn = 'X';
-                }
-            }, {once: true});
-        });
-    })();
+    function placeMarker(block, currentMarker) {
+        block.classList.add(currentMarker);
+    }
+
+    function switchTurns() {
+        xTurn = !xTurn;
+    }
+
+    function switchHover() {
+        grid.classList.remove('x');
+        grid.classList.remove('o');
+
+        if(xTurn) grid.classList.add('x');
+        else if(!xTurn) grid.classList.add('o');
+    }
+
+    blocks.forEach(block => {
+        block.addEventListener('click', handleClick, {once: true});
+    });
 })();
