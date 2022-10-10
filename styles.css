@@ -1,0 +1,68 @@
+html, body, div, span, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, cite, code, img, small, strike, strong, sub,
+sup, tt, var, b, u, i,
+ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+ul, li, ol {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    gap: 150px;
+    position: relative;
+    right: 150px;
+}
+
+.start-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.start-controls button {
+    border: none;
+    background-color: cornflowerblue;
+    color: white;
+    font-size: 20px;
+    padding: 5px 30px;
+}
+
+.game {
+    background-color: black;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 5px;
+}
+
+.blocks {
+    background-color: white;
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 80px;
+}
