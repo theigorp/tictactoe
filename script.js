@@ -4,6 +4,9 @@ const Gameboard = (() => {
     const buttonO  = document.querySelector('#player-o');
     const startButton = document.querySelector('#start');
     const startControlsEl = document.querySelector('.start-controls');
+    const msgContainer = document.querySelector('.message-container');
+    const messageEl = document.querySelector('.message');
+    const restartButton = document.querySelector('.restart');
     let playerChoice, xTurn;
 
     const combinations = [
@@ -39,14 +42,32 @@ const Gameboard = (() => {
 
     const blocks = document.querySelectorAll('.blocks');
 
+    blocks.forEach(block => {
+        block.addEventListener('click', handleClick, {once: true});
+    });
+
     function handleClick(e) {
         const block = e.target;
         const currentMarker = xTurn ? 'x' : 'o';
         placeMarker(block, currentMarker);
-        if(checkResult()==1) console.log('o is winner')
-        else if(checkResult()==2) console.log('x is winner');
+        if(checkResult()==1)
+        {
+            msgContainer.style.display = 'flex';
+            messageEl.textContent = 'The winner is O!';
+        }
+        else if(checkResult()==2)
+        {
+            msgContainer.style.display = 'flex';
+            messageEl.textContent = 'The winner is X!';
+        }
+        else if(isDraw())
+        {
+            msgContainer.style.display = 'flex';
+            messageEl.textContent = 'Draw!';
+        }
         switchTurns();
         switchHover();
+        restartButton.addEventListener('click', resetGame);
     }
 
     function placeMarker(block, currentMarker) {
@@ -65,7 +86,13 @@ const Gameboard = (() => {
         else if(!xTurn) grid.classList.add('o');
     }
 
-    function checkResult(currentMarker) {
+    function isDraw() {
+        return [...blocks].every(block => {
+            return block.classList.contains('o') || block.classList.contains('x');
+        })
+    }
+
+    function checkResult() {
         let winner;
         if(checkO()) return winner = 1;
         if(checkX()) return winner = 2;
@@ -87,7 +114,16 @@ const Gameboard = (() => {
         });
     }
 
-    blocks.forEach(block => {
-        block.addEventListener('click', handleClick, {once: true});
-    });
+    function resetGame() {
+        blocks.forEach(block => {
+            block.classList.remove('o');
+            block.classList.remove('x');
+            block.removeEventListener('click', handleClick);
+            block.addEventListener('click', handleClick, {once: true});
+        });
+        grid.classList.remove('x');
+        grid.classList.remove('o');
+        msgContainer.style.display = 'none';
+        startControlsEl.style.display = 'flex';
+    }
 })();
